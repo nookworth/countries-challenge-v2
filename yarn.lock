@@ -455,11 +455,6 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@popperjs/core@^2.11.2":
-  version "2.11.8"
-  resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.11.8.tgz#6b79032e760a0899cd4204710beede972a3a185f"
-  integrity sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==
-
 "@rollup/rollup-android-arm-eabi@4.6.1":
   version "4.6.1"
   resolved "https://registry.yarnpkg.com/@rollup/rollup-android-arm-eabi/-/rollup-android-arm-eabi-4.6.1.tgz#0ea289f68ff248b50fea5716ca9f65f7d4dba3ae"
@@ -564,6 +559,13 @@
   version "7.0.15"
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.15.tgz#596a1747233694d50f6ad8a7869fcb6f56cf5841"
   integrity sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==
+
+"@types/node@^20.10.4":
+  version "20.10.4"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.10.4.tgz#b246fd84d55d5b1b71bf51f964bd514409347198"
+  integrity sha512-D08YG6rr8X90YB56tSIuBaddy/UXAA9RKJoFvrsnogAum/0pmjkgi4+2nx96A330FmioegBWmEYQ+syqCFaveg==
+  dependencies:
+    undici-types "~5.26.4"
 
 "@types/prop-types@*":
   version "15.7.11"
@@ -1303,6 +1305,11 @@ graphql-tag@^2.12.6:
   dependencies:
     tslib "^2.1.0"
 
+graphql@^16.8.1:
+  version "16.8.1"
+  resolved "https://registry.yarnpkg.com/graphql/-/graphql-16.8.1.tgz#1930a965bef1170603702acdb68aedd3f3cf6f07"
+  integrity sha512-59LZHPdGZVh695Ud9lRzPBVTtlX9ZCV150Er2W43ro37wVof0ctenSaskPPjN7lVTIN8mSZt8PHUNKZuNQUuxw==
+
 has-flag@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/has-flag/-/has-flag-3.0.0.tgz#b5d454dc2199ae225699f3467e5a07f3b955bafd"
@@ -1726,13 +1733,6 @@ postcss@^8.4.23, postcss@^8.4.32:
     picocolors "^1.0.0"
     source-map-js "^1.0.2"
 
-preline@^2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/preline/-/preline-2.0.2.tgz#5e1b40aeb9948cc664f11c74f9ebbc0049e6fd78"
-  integrity sha512-CDBUb7TpJ5C3UbW3ynuC82MWs34o9jW9vgbyn4wiYRbHspLi6hff9R2Ug9tLVkQgdyjKXotI7RB9Sm71+3v+jQ==
-  dependencies:
-    "@popperjs/core" "^2.11.2"
-
 prelude-ls@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/prelude-ls/-/prelude-ls-1.2.1.tgz#debc6489d7a6e6b0e7611888cec880337d316396"
@@ -2040,6 +2040,11 @@ typescript@^5.2.2:
   version "5.3.3"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.3.3.tgz#b3ce6ba258e72e6305ba66f5c9b452aaee3ffe37"
   integrity sha512-pXWcraxM0uxAS+tN0AG/BF2TyqmHO014Z070UsJ+pFvYuRSq8KH8DmWpnbXe0pEPDHXZV3FcAbJkijJ5oNEnWw==
+
+undici-types@~5.26.4:
+  version "5.26.5"
+  resolved "https://registry.yarnpkg.com/undici-types/-/undici-types-5.26.5.tgz#bcd539893d00b56e964fd2657a4866b221a65617"
+  integrity sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==
 
 update-browserslist-db@^1.0.13:
   version "1.0.13"
