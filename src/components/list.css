@@ -1,0 +1,8 @@
+#country-list {
+  column-fill: balance;
+}
+
+#country-list>li>button>p {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 1.5em;
+}

@@ -1,4 +1,5 @@
 #details-popover {
   font-family: 'Courier New', Courier, monospace;
-  height: 800px;
+  height: 1080px;
+  max-width: 720px;
 }

@@ -6,6 +6,7 @@ import { List } from './components/List'
 import { useListCountries } from './hooks/'
 import { ApolloClient, InMemoryCache } from '@apollo/client'
 import { Popover } from './components/Popover'
+import { Header } from './components/Header'
 
 type country = {
   name: string
@@ -47,8 +48,32 @@ export const App = () => {
     const countryCode = matchingCountry?.code
     setCountryCode(countryCode)
     const popover = document.getElementById('details-popover')
+    // @ts-expect-error typescript doesn't like this
     popover?.showModal()
     return countryCode
+  }
+
+  function onGo(event: React.MouseEvent<HTMLButtonElement>) {
+    // @ts-expect-error typescript doesn't like this
+    const searchTerm = document.getElementById('search-input').value
+    const matchingCountry = countriesData?.find((country: country) => {
+      return formatSearchTerm(searchTerm) === country.name
+    })
+    const emoji = matchingCountry?.emoji
+
+    event.preventDefault()
+
+    if (validateSearchTerm(searchTerm)) {
+      setSearchTerms([...searchTerms, formatSearchTerm(searchTerm)])
+      setEmojis([...emojis, emoji])
+      // @ts-expect-error typescript doesn't like this
+      document.getElementById('search-input').value = ''
+      return
+    } else {
+      window.alert(
+        'Please enter a valid country name that you have not already searched for.'
+      )
+    }
   }
 
   function onReset() {
@@ -79,6 +104,13 @@ export const App = () => {
     }
   }
 
+  function searchAll() {
+    const allCountries = countriesData.map((country: country) => {
+      return country.name
+    })
+    setSearchTerms(allCountries)
+  }
+
   // TODO: allow users to search for a list of comma-separated countries
   function validateSearchTerm(searchTerm: string) {
     const isValidCountry = data?.countries.some((country: country) => {
@@ -91,14 +123,18 @@ export const App = () => {
   }
 
   return (
-    <main className="flex flex-row">
-      <Search onReset={onReset} onSubmit={onSubmit} />
-      <List
-        onClick={onClickCountry}
-        emojis={emojis}
-        searchTerms={searchTerms}
-      />
-      <Popover countryCode={countryCode} />
-    </main>
+    <>
+      <Header />
+      <main className='flex flex-row bg-system-papaya'>
+        <Search
+          onGo={onGo}
+          onReset={onReset}
+          onSubmit={onSubmit}
+          searchAll={searchAll}
+        />
+        <List onClick={onClickCountry} searchTerms={searchTerms} />
+        <Popover countryCode={countryCode} />
+      </main>
+    </>
   )
 }

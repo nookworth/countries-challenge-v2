@@ -13,6 +13,7 @@ export default {
       'dark-orange': '#FF8C00',
       'deep-sky-blue': '#00BFFF',
       'dodger-blue': '#1E90FF',
+      'faded-blue': '#A9C7E7',
       'forest-green': '#228B22',
       gold: '#FFD700',
       'light-gray': '#D3D3D3',
