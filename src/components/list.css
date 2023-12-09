@@ -6,3 +6,21 @@
   font-family: 'Courier New', Courier, monospace;
   font-size: 1.5em;
 }
+
+.first-list-item-button {
+  animation-duration: 1s;
+  animation-iteration-count: 10;
+  animation-name: letter;
+}
+
+@keyframes letter {
+  0% {
+    display: none;
+  }
+  99% {
+    display: none;
+  }
+  100% {
+    display: block;
+  }
+}

@@ -1,8 +1,10 @@
+import React from 'react'
 import { useGetCountryDetails } from '../hooks'
 import './popover.css'
 
 interface PopoverProps {
   countryCode: string
+  setIsLoadingCountryDetails: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 type language = {
@@ -14,7 +16,7 @@ type subdivision = {
   name: string
 }
 
-export const Popover = ({ countryCode }: PopoverProps) => {
+export const Popover = ({ countryCode, setIsLoadingCountryDetails }: PopoverProps) => {
   // TODO: refactor so country details are passesd down from App.tsx and showModal() is only called when loading is false
   const { data, loading, error } = useGetCountryDetails(countryCode)
   const countryDetails = data?.country
@@ -22,6 +24,8 @@ export const Popover = ({ countryCode }: PopoverProps) => {
   // TODO: implement dropdown for many subdivisions
   const subdivisions =
     countryDetails?.states ?? countryDetails?.subdivisions ?? null
+
+  setIsLoadingCountryDetails(loading)
 
   return (
     <dialog
@@ -47,27 +51,27 @@ export const Popover = ({ countryCode }: PopoverProps) => {
         <div className='p-4'>
           <ul className='text-gray-800'>
             <li>
-              <u>Flag</u>
+              <em>Flag</em>
               {': '}
               {countryDetails?.emoji}
             </li>
             <li>
-              <u>Capital city</u>
+              <em>Capital city</em>
               {': '}
               {countryDetails?.capital}
             </li>
             <li>
-              <u>Continent</u>
+              <em>Continent</em>
               {': '}
               {countryDetails?.continent?.name}
             </li>
             <li>
-              <u>Currency</u>
+              <em>Currency</em>
               {': '}
               {countryDetails?.currency}
             </li>
             <li>
-              <u>Languages</u>
+              <em>Languages</em>
             </li>
             <ul>
               {countryDetails?.languages.map(
@@ -81,18 +85,18 @@ export const Popover = ({ countryCode }: PopoverProps) => {
               )}
             </ul>
             <li>
-              <u>Phone code</u>
+              <em>Phone code</em>
               {': '}
               {countryDetails?.phone}
             </li>
             {subdivisions ? (
               <li>
-                <u>{`Subdivisions (${subdivisions?.length})`}</u>
+                <em>{`Subdivisions (${subdivisions?.length})`}</em>
               </li>
             ) : null}
             <ul className='pl-4 columns-3'>
               {subdivisions?.map((subdivision: subdivision, index: number) => {
-                return <li key={index}>{subdivision.name}</li>
+                return <li className='text-justify' key={index}>{subdivision.name}</li>
               })}
             </ul>
           </ul>

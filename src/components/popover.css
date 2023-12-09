@@ -1,5 +1,18 @@
 #details-popover {
+  animation: slideIn 0.75s ease-out;
   font-family: 'Courier New', Courier, monospace;
   height: 1080px;
   max-width: 720px;
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translateX(100%);
+    display: none;
+  }
+
+  100% {
+    transform: translateX(0%);
+    display: block;
+  }
 }

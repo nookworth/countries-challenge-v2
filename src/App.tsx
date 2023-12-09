@@ -21,12 +21,17 @@ export const client = new ApolloClient({
 
 export const App = () => {
   const [emojis, setEmojis] = useState<string[]>([])
+  const [isLoadingCountryDetails, setIsLoadingCountryDetails] =
+    useState<boolean>(false)
+  const [searchTerm, setSearchTerm] = useState<string>('')
   const [searchTerms, setSearchTerms] = useState<string[]>([])
   const [countryCode, setCountryCode] = useState<string>('US')
   // const [isPopoverOpen, setIsPopoverOpen] = useState<boolean>(false)
   // TODO: loading and error messages
   const { data } = useListCountries()
   const countriesData = data?.countries
+
+  console.log('country details loading?', isLoadingCountryDetails)
 
   // TODO: handle multi-word country names
   function formatSearchTerm(searchTerm: string) {
@@ -47,9 +52,10 @@ export const App = () => {
     })
     const countryCode = matchingCountry?.code
     setCountryCode(countryCode)
+
     const popover = document.getElementById('details-popover')
     // @ts-expect-error typescript doesn't like this
-    popover?.showModal()
+    isLoadingCountryDetails === false && popover?.showModal()
     return countryCode
   }
 
@@ -64,6 +70,7 @@ export const App = () => {
     event.preventDefault()
 
     if (validateSearchTerm(searchTerm)) {
+      setSearchTerm(formatSearchTerm(searchTerm))
       setSearchTerms([...searchTerms, formatSearchTerm(searchTerm)])
       setEmojis([...emojis, emoji])
       // @ts-expect-error typescript doesn't like this
@@ -92,6 +99,7 @@ export const App = () => {
     event.preventDefault()
 
     if (validateSearchTerm(searchTerm)) {
+      setSearchTerm(formatSearchTerm(searchTerm))
       setSearchTerms([...searchTerms, formatSearchTerm(searchTerm)])
       setEmojis([...emojis, emoji])
       // @ts-expect-error typescript doesn't like this
@@ -132,8 +140,15 @@ export const App = () => {
           onSubmit={onSubmit}
           searchAll={searchAll}
         />
-        <List onClick={onClickCountry} searchTerms={searchTerms} />
-        <Popover countryCode={countryCode} />
+        <List
+          onClick={onClickCountry}
+          searchTerm={searchTerm}
+          searchTerms={searchTerms}
+        />
+        <Popover
+          countryCode={countryCode}
+          setIsLoadingCountryDetails={setIsLoadingCountryDetails}
+        />
       </main>
     </>
   )
