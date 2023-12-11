@@ -55,7 +55,7 @@ export const Search = ({ onGo, onReset, onSubmit, searchAll }: SearchProps) => {
           </button>
           <button
             type='button'
-            className='py-3 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-gray-800 hover:border-forest-green hover:bg-forest-green hover:text-system-papaya transition-all'
+            className='py-3 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-gray-800 hover:border-orange hover:text-orange transition-all'
             onClick={searchAll}
           >
             All
