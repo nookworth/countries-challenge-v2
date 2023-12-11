@@ -23,17 +23,16 @@ export const App = () => {
   const [emojis, setEmojis] = useState<string[]>([])
   const [isLoadingCountryDetails, setIsLoadingCountryDetails] =
     useState<boolean>(false)
-  const [searchTerm, setSearchTerm] = useState<string>('')
+  // const [searchTerm, setSearchTerm] = useState<string>('')
   const [searchTerms, setSearchTerms] = useState<string[]>([])
   const [countryCode, setCountryCode] = useState<string>('US')
-  // const [isPopoverOpen, setIsPopoverOpen] = useState<boolean>(false)
+  const [isPopoverOpen, setIsPopoverOpen] = useState<boolean>(false)
   // TODO: loading and error messages
   const { data } = useListCountries()
   const countriesData = data?.countries
 
   console.log('country details loading?', isLoadingCountryDetails)
 
-  // TODO: handle multi-word country names
   function formatSearchTerm(searchTerm: string) {
     const lowerCaseSearchTerm = searchTerm.trim().toLowerCase()
     const matchingCountry = countriesData?.find((country: country) => {
@@ -56,6 +55,7 @@ export const App = () => {
     const popover = document.getElementById('details-popover')
     // @ts-expect-error typescript doesn't like this
     isLoadingCountryDetails === false && popover?.showModal()
+    setIsPopoverOpen(true)
     return countryCode
   }
 
@@ -70,7 +70,7 @@ export const App = () => {
     event.preventDefault()
 
     if (validateSearchTerm(searchTerm)) {
-      setSearchTerm(formatSearchTerm(searchTerm))
+      // setSearchTerm(formatSearchTerm(searchTerm))
       setSearchTerms([...searchTerms, formatSearchTerm(searchTerm)])
       setEmojis([...emojis, emoji])
       // @ts-expect-error typescript doesn't like this
@@ -99,7 +99,7 @@ export const App = () => {
     event.preventDefault()
 
     if (validateSearchTerm(searchTerm)) {
-      setSearchTerm(formatSearchTerm(searchTerm))
+      // setSearchTerm(formatSearchTerm(searchTerm))
       setSearchTerms([...searchTerms, formatSearchTerm(searchTerm)])
       setEmojis([...emojis, emoji])
       // @ts-expect-error typescript doesn't like this
@@ -142,11 +142,11 @@ export const App = () => {
         />
         <List
           onClick={onClickCountry}
-          searchTerm={searchTerm}
           searchTerms={searchTerms}
         />
         <Popover
           countryCode={countryCode}
+          isPopoverOpen={isPopoverOpen}
           setIsLoadingCountryDetails={setIsLoadingCountryDetails}
         />
       </main>
