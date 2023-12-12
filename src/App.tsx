@@ -1,6 +1,5 @@
 import React from 'react'
 import { useState } from 'react'
-import './App.css'
 import { Search } from './components/Search'
 import { List } from './components/List'
 import { useListCountries } from './hooks/'

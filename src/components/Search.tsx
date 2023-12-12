@@ -5,9 +5,7 @@ type SearchAll = (event: React.MouseEvent<HTMLButtonElement>) => void
 
 type SearchOnClick = (event: React.MouseEvent<HTMLButtonElement>) => void
 
-type SearchOnSubmit = (
-  event: React.FormEvent<HTMLFormElement>
-) => void
+type SearchOnSubmit = (event: React.FormEvent<HTMLFormElement>) => void
 
 interface SearchProps {
   onGo: SearchOnClick
@@ -19,8 +17,12 @@ interface SearchProps {
 export const Search = ({ onGo, onReset, onSubmit, searchAll }: SearchProps) => {
   return (
     <div className='bg-system-papaya min-h-screen w-1/4 py-4'>
-      <div className='bg-system-platinum border-2 border-gray-800 rounded-lg flex flex-col gap-8 text-center justify-center items-center py-4 w-5/6 mx-auto shadow-md' id='search-box'>
+      <div
+        className='bg-system-platinum border-2 border-gray-800 rounded-lg flex flex-col gap-8 text-center justify-center items-center py-4 w-5/6 mx-auto shadow-md'
+        id='search-box'
+      >
         <form
+          autoComplete='country-name'
           className='inline-flex flex-col gap-8 w-5/6'
           id='search-form'
           name='search-form'

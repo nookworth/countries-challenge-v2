@@ -61,7 +61,6 @@ export const Popover = ({
     >
       <div className='flex justify-between h-20 items-center pr-4 border-b'>
         <div className='bg-system-manila-dark flex justify-center items-center shadow-md h-full w-2/3 relative rounded-md'>
-          {/* <span className='bg-system-manila h-1/2 w-1/4 absolute rounded-bl-md top-0 right-0 shadow-none'></span> */}
           <p className='text-lg font-bold text-gray-800'>
             {`${countryDetails?.name}`}
           </p>
@@ -75,7 +74,6 @@ export const Popover = ({
           <p className='hover:underline'>Done</p>
         </button>
       </div>
-      {/* <div className='flex flex-col items-center'> */}
         <div className='m-2 object-fill' id='country-pic'>
           <img alt={altText} src={imageLink}></img>
         </div>
@@ -136,7 +134,6 @@ export const Popover = ({
             </ul>
           </ul>
         </div>
-      {/* </div> */}
     </dialog>
   )
 }
