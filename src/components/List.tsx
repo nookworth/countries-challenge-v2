@@ -30,12 +30,11 @@ export function List({ onClick, searchTerms }: ListProps) {
           setLastItem(wordBuilder.join('')),
           (iterator.current += 1),
           clearInterval(interval)
-      }, 100)
+      }, 75)
     }
 
     searchTerm && !hasSearchTermBeenRendered && typeLetters()
 
-    console.log('last item: ', lastItem, 'word builder: ', wordBuilder)
   }, [hasSearchTermBeenRendered, lastItem, searchTerm, wordBuilder])
 
   useEffect(() => {
@@ -44,7 +43,7 @@ export function List({ onClick, searchTerms }: ListProps) {
 
   return (
     <div className='bg-system-papaya min-h-screen w-3/4 p-4'>
-      <ul className='text-lg columns-3 space-y-1' id='country-list'>
+      <ul className='text-lg columns-2 lg:columns-3 space-y-1' id='country-list'>
         {hasSearchTermBeenRendered
           ? searchTerms.map((term, index) => {
               return (

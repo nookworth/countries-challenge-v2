@@ -45,7 +45,6 @@ export const Popover = ({
         .then(response => response.json())
         .then(
           data => (
-            console.log('data: ', data),
             setImageLink(data?.results[0]?.urls['small']),
             setAltText(
               data?.results[0]?.alt_description ?? data?.results[0]?.description

@@ -23,15 +23,12 @@ export const App = () => {
   const [emojis, setEmojis] = useState<string[]>([])
   const [isLoadingCountryDetails, setIsLoadingCountryDetails] =
     useState<boolean>(false)
-  // const [searchTerm, setSearchTerm] = useState<string>('')
   const [searchTerms, setSearchTerms] = useState<string[]>([])
   const [countryCode, setCountryCode] = useState<string>('US')
   const [isPopoverOpen, setIsPopoverOpen] = useState<boolean>(false)
   // TODO: loading and error messages
   const { data } = useListCountries()
   const countriesData = data?.countries
-
-  console.log('country details loading?', isLoadingCountryDetails)
 
   function formatSearchTerm(searchTerm: string) {
     const lowerCaseSearchTerm = searchTerm.trim().toLowerCase()
