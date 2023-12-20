@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { Search } from './components/Search'
 import { List } from './components/List'
 import { useListCountries } from './hooks/'
@@ -25,6 +25,7 @@ export const App = () => {
   const [searchTerms, setSearchTerms] = useState<string[]>([])
   const [countryCode, setCountryCode] = useState<string>('US')
   const [isPopoverOpen, setIsPopoverOpen] = useState<boolean>(false)
+  const modalRef = useRef(null)
   // TODO: loading and error messages
   const { data } = useListCountries()
   const countriesData = data?.countries
@@ -48,9 +49,10 @@ export const App = () => {
     const countryCode = matchingCountry?.code
     setCountryCode(countryCode)
 
-    const popover = document.getElementById('details-popover')
+    // const popover = document.getElementById('details-popover')
     // @ts-expect-error typescript doesn't like this
-    isLoadingCountryDetails === false && popover?.showModal()
+    // isLoadingCountryDetails === false && popover?.showModal()
+    modalRef.current.showModal()
     setIsPopoverOpen(true)
     return countryCode
   }
@@ -143,6 +145,7 @@ export const App = () => {
         <Popover
           countryCode={countryCode}
           isPopoverOpen={isPopoverOpen}
+          ref={modalRef}
           setIsLoadingCountryDetails={setIsLoadingCountryDetails}
         />
       </main>

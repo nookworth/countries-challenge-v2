@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, forwardRef, ForwardedRef, useState } from 'react'
 import { useGetCountryDetails } from '../hooks'
 import './popover.css'
 
@@ -17,66 +17,75 @@ type subdivision = {
   name: string
 }
 
-export const Popover = ({
-  countryCode,
-  // setIsLoadingCountryDetails,
-  isPopoverOpen,
-}: PopoverProps) => {
-  const { data, error } = useGetCountryDetails(countryCode)
-  const countryDetails = data?.country
-  if (error) console.log(error)
-  // TODO: implement dropdown for many subdivisions
-  const subdivisions =
-    countryDetails?.states ?? countryDetails?.subdivisions ?? null
+export const Popover = forwardRef(
+  (
+    {
+      countryCode,
+      // setIsLoadingCountryDetails,
+      isPopoverOpen,
+    }: PopoverProps,
+    modalRef: ForwardedRef<HTMLDialogElement>
+  ) => {
+    const { data, error } = useGetCountryDetails(countryCode)
+    const countryDetails = data?.country
+    if (error) console.log(error)
+    // TODO: implement dropdown for many subdivisions
+    const subdivisions =
+      countryDetails?.states ?? countryDetails?.subdivisions ?? null
 
-  const [altText, setAltText] = useState<string>('')
-  const [imageLink, setImageLink] = useState<string>('')
+    const [altText, setAltText] = useState<string>('')
+    const [imageLink, setImageLink] = useState<string>('')
 
-  // setIsLoadingCountryDetails(loading)
+    // setIsLoadingCountryDetails(loading)
 
-  useEffect(() => {
-    if (isPopoverOpen) {
-      const baseURI = 'https://api.unsplash.com/'
-      const photosURI = '/search/photos'
-      const accessKey = '4QEWFRFu7YtM-2LYhFl2J5vxbSy2Xup-QFlYOWsI-Io'
-      fetch(
-        `${baseURI}${photosURI}?query=${countryDetails?.name}&per_page=1&orientation=squarish&client_id=${accessKey}`
-      )
-        .then(response => response.json())
-        .then(
-          data => (
-            setImageLink(data?.results[0]?.urls['small']),
-            setAltText(
-              data?.results[0]?.alt_description ?? data?.results[0]?.description
+    useEffect(() => {
+      if (isPopoverOpen) {
+        const baseURI = 'https://api.unsplash.com/'
+        const photosURI = '/search/photos'
+        const accessKey = '4QEWFRFu7YtM-2LYhFl2J5vxbSy2Xup-QFlYOWsI-Io'
+        fetch(
+          `${baseURI}${photosURI}?query=${countryDetails?.name}&per_page=1&orientation=squarish&client_id=${accessKey}`
+        )
+          .then(response => response.json())
+          .then(
+            data => (
+              setImageLink(data?.results[0]?.urls['small']),
+              setAltText(
+                data?.results[0]?.alt_description ??
+                  data?.results[0]?.description
+              )
             )
           )
-        )
-    }
-  }, [countryDetails?.name, isPopoverOpen])
+      }
+    }, [countryDetails?.name, isPopoverOpen])
 
-  return (
-    <dialog
-      className='fixed bg-system-manila left-2/3 w-1/3 rounded-lg shadow-lg'
-      id='details-popover'
-    >
-      <div className='flex justify-between h-20 items-center pr-4 border-b'>
-        <div className='bg-system-manila-dark flex justify-center items-center shadow-md h-full w-2/3 relative rounded-md'>
-          <p className='text-lg font-bold text-gray-800'>
-            {`${countryDetails?.name}`}
-          </p>
+    return (
+      <dialog
+        className='fixed bg-system-manila left-2/3 w-1/3 rounded-lg shadow-lg'
+        id='details-popover'
+        ref={modalRef}
+      >
+        <div className='flex justify-between h-20 items-center pr-4 border-b'>
+          <div className='bg-system-manila-dark flex justify-center items-center shadow-md h-full w-2/3 relative rounded-md'>
+            <p className='text-lg font-bold text-gray-800'>
+              {`${countryDetails?.name}`}
+            </p>
+          </div>
+          <button
+            onClick={() => {
+              // @ts-expect-error typescript thinks this method does not exist
+              // document.getElementById('details-popover')?.close()
+              modalRef.current.close()
+            }}
+          >
+            <p className='hover:underline'>Done</p>
+          </button>
         </div>
-        <button
-          onClick={() => {
-            // @ts-expect-error typescript thinks this method does not exist
-            document.getElementById('details-popover')?.close()
-          }}
-        >
-          <p className='hover:underline'>Done</p>
-        </button>
-      </div>
-        <div className='m-2 object-fill' id='country-pic'>
-          <img alt={altText} src={imageLink}></img>
-        </div>
+        <img
+          alt={altText}
+          className='mx-auto my-2 block rounded-md shadow-md grayscale'
+          src={imageLink}
+        ></img>
         <div className='p-4'>
           <ul className='text-gray-800'>
             <li>
@@ -134,6 +143,7 @@ export const Popover = ({
             </ul>
           </ul>
         </div>
-    </dialog>
-  )
-}
+      </dialog>
+    )
+  }
+)
