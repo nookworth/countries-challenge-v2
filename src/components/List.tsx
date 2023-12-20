@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import './list.css'
 
 interface ListProps {
@@ -37,13 +37,13 @@ export function List({ onClick, searchTerms }: ListProps) {
 
   }, [hasSearchTermBeenRendered, lastItem, searchTerm, wordBuilder])
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setHasSearchTermBeenRendered(false)
   }, [searchTerms])
 
   return (
     <div className='bg-system-papaya min-h-screen w-3/4 p-4'>
-      <ul className='text-lg columns-2 lg:columns-3 space-y-1' id='country-list'>
+      <ul className='text-lg space-y-1' id='country-list'>
         {hasSearchTermBeenRendered
           ? searchTerms.map((term, index) => {
               return (

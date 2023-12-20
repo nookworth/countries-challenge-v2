@@ -19,10 +19,10 @@ type subdivision = {
 
 export const Popover = ({
   countryCode,
-  setIsLoadingCountryDetails,
+  // setIsLoadingCountryDetails,
   isPopoverOpen,
 }: PopoverProps) => {
-  const { data, loading, error } = useGetCountryDetails(countryCode)
+  const { data, error } = useGetCountryDetails(countryCode)
   const countryDetails = data?.country
   if (error) console.log(error)
   // TODO: implement dropdown for many subdivisions
@@ -32,7 +32,7 @@ export const Popover = ({
   const [altText, setAltText] = useState<string>('')
   const [imageLink, setImageLink] = useState<string>('')
 
-  setIsLoadingCountryDetails(loading)
+  // setIsLoadingCountryDetails(loading)
 
   useEffect(() => {
     if (isPopoverOpen) {
@@ -56,7 +56,7 @@ export const Popover = ({
 
   return (
     <dialog
-      className='absolute bg-system-manila left-2/3 w-1/3 rounded-lg shadow-lg'
+      className='fixed bg-system-manila left-2/3 w-1/3 rounded-lg shadow-lg'
       id='details-popover'
     >
       <div className='flex justify-between h-20 items-center pr-4 border-b'>

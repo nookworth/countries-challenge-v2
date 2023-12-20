@@ -1,5 +1,7 @@
 #country-list {
   column-fill: balance;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
 }
 
 #country-list>li>button>p {
@@ -8,6 +10,11 @@
 }
 
 #last-list-item {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 1.5em;
+}
+
+#penultimate-list-item {
   font-family: 'Courier New', Courier, monospace;
   font-size: 1.5em;
 }
