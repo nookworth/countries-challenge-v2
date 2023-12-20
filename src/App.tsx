@@ -6,7 +6,7 @@ import { Header } from './components/Header'
 import { useListCountries } from './hooks/'
 import { ApolloClient, InMemoryCache } from '@apollo/client'
 
-type country = {
+export type country = {
   name: string
   code: string
   emoji: string
@@ -47,14 +47,14 @@ export const App = () => {
     const countryCode = matchingCountry?.code
     setCountryCode(countryCode)
 
-    // @ts-expect-error typescript doesn't like this
+    // @ts-expect-error typescript thinks this could possibly be null
     modalRef.current.showModal()
     setIsPopoverOpen(true)
     return countryCode
   }
 
   function onGo(event: React.MouseEvent<HTMLButtonElement>) {
-    // @ts-expect-error typescript doesn't like this
+    // @ts-expect-error typescript thinks this could possibly be null
     const searchTerm = searchInputRef.current.value
     const matchingCountry = countriesData?.find((country: country) => {
       return formatSearchTerm(searchTerm) === country.name
@@ -66,7 +66,7 @@ export const App = () => {
     if (validateSearchTerm(searchTerm)) {
       setSearchTerms([...searchTerms, formatSearchTerm(searchTerm)])
       setEmojis([...emojis, emoji])
-      // @ts-expect-error typescript doesn't like this
+      // @ts-expect-error typescript thinks this could possibly be null
       searchInputRef.current.value = ''
       return
     } else {
@@ -82,7 +82,7 @@ export const App = () => {
   }
 
   function onSubmit(event: React.FormEvent<HTMLFormElement>) {
-    // @ts-expect-error typescript doesn't like this
+    // @ts-expect-error typescript thinks this could possibly be null
     const searchTerm = searchInputRef.current.value
     const matchingCountry = countriesData?.find((country: country) => {
       return formatSearchTerm(searchTerm) === country.name
@@ -94,7 +94,7 @@ export const App = () => {
     if (validateSearchTerm(searchTerm)) {
       setSearchTerms([...searchTerms, formatSearchTerm(searchTerm)])
       setEmojis([...emojis, emoji])
-      // @ts-expect-error typescript doesn't like this
+      // @ts-expect-error typescript thinks this could possibly be null
       searchInputRef.current.value = ''
       return
     } else {
@@ -105,7 +105,7 @@ export const App = () => {
   }
 
   function searchAll() {
-    const allCountries = countriesData.map((country: country) => {
+    const allCountries = countriesData?.map((country: country) => {
       return country.name
     })
     setSearchTerms(allCountries)
@@ -133,10 +133,7 @@ export const App = () => {
           ref={searchInputRef}
           searchAll={searchAll}
         />
-        <List
-          onClick={onClickCountry}
-          searchTerms={searchTerms}
-        />
+        <List onClick={onClickCountry} searchTerms={searchTerms} />
         <Popover
           countryCode={countryCode}
           isPopoverOpen={isPopoverOpen}
