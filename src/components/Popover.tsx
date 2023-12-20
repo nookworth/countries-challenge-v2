@@ -1,10 +1,9 @@
-import React, { useEffect, forwardRef, ForwardedRef, useState } from 'react'
+import { useEffect, forwardRef, ForwardedRef, useState } from 'react'
 import { useGetCountryDetails } from '../hooks'
 import './popover.css'
 
 interface PopoverProps {
   countryCode: string
-  setIsLoadingCountryDetails: React.Dispatch<React.SetStateAction<boolean>>
   isPopoverOpen: boolean
 }
 
@@ -21,7 +20,6 @@ export const Popover = forwardRef(
   (
     {
       countryCode,
-      // setIsLoadingCountryDetails,
       isPopoverOpen,
     }: PopoverProps,
     modalRef: ForwardedRef<HTMLDialogElement>
@@ -36,7 +34,6 @@ export const Popover = forwardRef(
     const [altText, setAltText] = useState<string>('')
     const [imageLink, setImageLink] = useState<string>('')
 
-    // setIsLoadingCountryDetails(loading)
 
     useEffect(() => {
       if (isPopoverOpen) {
@@ -74,7 +71,6 @@ export const Popover = forwardRef(
           <button
             onClick={() => {
               // @ts-expect-error typescript thinks this method does not exist
-              // document.getElementById('details-popover')?.close()
               modalRef.current.close()
             }}
           >

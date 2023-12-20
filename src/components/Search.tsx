@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {forwardRef, ForwardedRef} from 'react'
 import './search.css'
 
 type SearchAll = (event: React.MouseEvent<HTMLButtonElement>) => void
@@ -14,7 +14,7 @@ interface SearchProps {
   searchAll: SearchAll
 }
 
-export const Search = ({ onGo, onReset, onSubmit, searchAll }: SearchProps) => {
+export const Search = forwardRef(({ onGo, onReset, onSubmit, searchAll }: SearchProps, searchInputRef: ForwardedRef<HTMLInputElement>) => {
   return (
     <div className='bg-system-papaya min-h-screen w-1/4 py-4'>
       <div
@@ -38,6 +38,7 @@ export const Search = ({ onGo, onReset, onSubmit, searchAll }: SearchProps) => {
             className='bg-system-papaya py-3 px-4 block w-full border-gray-200 rounded-lg text-sm outline-none focus:outline-gray-800'
             name='search-input'
             placeholder='e.g. Brazil'
+            ref={searchInputRef}
           ></input>
         </form>
         <div className='flex flex-row-reverse gap-4'>
@@ -66,4 +67,4 @@ export const Search = ({ onGo, onReset, onSubmit, searchAll }: SearchProps) => {
       </div>
     </div>
   )
-}
+})

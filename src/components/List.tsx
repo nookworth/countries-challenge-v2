@@ -25,6 +25,7 @@ export function List({ onClick, searchTerms }: ListProps) {
       }
       const searchTermArr = searchTerm?.split('')
 
+      // TODO: skip spaces when typing out words
       const interval = setInterval(() => {
         setWordBuilder([...wordBuilder, searchTermArr[iterator.current]]),
           setLastItem(wordBuilder.join('')),

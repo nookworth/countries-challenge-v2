@@ -1,11 +1,10 @@
-import React from 'react'
-import { useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { Search } from './components/Search'
 import { List } from './components/List'
-import { useListCountries } from './hooks/'
-import { ApolloClient, InMemoryCache } from '@apollo/client'
 import { Popover } from './components/Popover'
 import { Header } from './components/Header'
+import { useListCountries } from './hooks/'
+import { ApolloClient, InMemoryCache } from '@apollo/client'
 
 type country = {
   name: string
@@ -20,12 +19,11 @@ export const client = new ApolloClient({
 
 export const App = () => {
   const [emojis, setEmojis] = useState<string[]>([])
-  const [isLoadingCountryDetails, setIsLoadingCountryDetails] =
-    useState<boolean>(false)
   const [searchTerms, setSearchTerms] = useState<string[]>([])
   const [countryCode, setCountryCode] = useState<string>('US')
   const [isPopoverOpen, setIsPopoverOpen] = useState<boolean>(false)
   const modalRef = useRef(null)
+  const searchInputRef = useRef(null)
   // TODO: loading and error messages
   const { data } = useListCountries()
   const countriesData = data?.countries
@@ -49,9 +47,7 @@ export const App = () => {
     const countryCode = matchingCountry?.code
     setCountryCode(countryCode)
 
-    // const popover = document.getElementById('details-popover')
     // @ts-expect-error typescript doesn't like this
-    // isLoadingCountryDetails === false && popover?.showModal()
     modalRef.current.showModal()
     setIsPopoverOpen(true)
     return countryCode
@@ -59,7 +55,7 @@ export const App = () => {
 
   function onGo(event: React.MouseEvent<HTMLButtonElement>) {
     // @ts-expect-error typescript doesn't like this
-    const searchTerm = document.getElementById('search-input').value
+    const searchTerm = searchInputRef.current.value
     const matchingCountry = countriesData?.find((country: country) => {
       return formatSearchTerm(searchTerm) === country.name
     })
@@ -68,11 +64,10 @@ export const App = () => {
     event.preventDefault()
 
     if (validateSearchTerm(searchTerm)) {
-      // setSearchTerm(formatSearchTerm(searchTerm))
       setSearchTerms([...searchTerms, formatSearchTerm(searchTerm)])
       setEmojis([...emojis, emoji])
       // @ts-expect-error typescript doesn't like this
-      document.getElementById('search-input').value = ''
+      searchInputRef.current.value = ''
       return
     } else {
       window.alert(
@@ -88,7 +83,7 @@ export const App = () => {
 
   function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     // @ts-expect-error typescript doesn't like this
-    const searchTerm = event.currentTarget.elements['search-input'].value
+    const searchTerm = searchInputRef.current.value
     const matchingCountry = countriesData?.find((country: country) => {
       return formatSearchTerm(searchTerm) === country.name
     })
@@ -97,11 +92,10 @@ export const App = () => {
     event.preventDefault()
 
     if (validateSearchTerm(searchTerm)) {
-      // setSearchTerm(formatSearchTerm(searchTerm))
       setSearchTerms([...searchTerms, formatSearchTerm(searchTerm)])
       setEmojis([...emojis, emoji])
       // @ts-expect-error typescript doesn't like this
-      event.currentTarget.elements['search-input'].value = ''
+      searchInputRef.current.value = ''
       return
     } else {
       window.alert(
@@ -136,6 +130,7 @@ export const App = () => {
           onGo={onGo}
           onReset={onReset}
           onSubmit={onSubmit}
+          ref={searchInputRef}
           searchAll={searchAll}
         />
         <List
@@ -146,7 +141,6 @@ export const App = () => {
           countryCode={countryCode}
           isPopoverOpen={isPopoverOpen}
           ref={modalRef}
-          setIsLoadingCountryDetails={setIsLoadingCountryDetails}
         />
       </main>
     </>
